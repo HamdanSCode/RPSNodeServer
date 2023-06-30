@@ -1,14 +1,11 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
-const port = 3000;
-app.get('/', (req, res) => {
-    res.json({ message: 'Hello World!' });
-});
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+const endpoints_1 = require("./endpoints");
+const registry_1 = require("./registry");
+const addUsersUseCaseImpl_1 = require("./useCase/addUsers/addUsersUseCaseImpl");
+const retrieveUsersUseCaseImpl_1 = require("./useCase/retrieveUsers/retrieveUsersUseCaseImpl");
+let registry = new registry_1.EndpointRegistry();
+registry.get(endpoints_1.ROOT, new retrieveUsersUseCaseImpl_1.retrieveUsersUseCase());
+registry.post(endpoints_1.ROOT, new addUsersUseCaseImpl_1.addUsersUseCaseImpl());
+registry.start();
+//# sourceMappingURL=index.js.map
